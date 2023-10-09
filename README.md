@@ -1,5 +1,5 @@
 # SuperNuts2
-A simple PRNG written in scheme.
+A simple PRNG written in scheme. This is an experimental project made for educational purposes.
 
 So far has been tested with the 'dieharder' test suite, and 'practrand'.
 It seems to pass the 'dieharder' tests and is currently being tested by 'practrand' (generating 24 bit integer output to stdout)
