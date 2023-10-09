@@ -3,8 +3,10 @@
 ; # SUPERNUTS2 #
 ; ##############
 ; A simple PRNG
-; Tested with guile, elk, scm, Ikarus Scheme
 ; author: dusthillresident@gmail.com https://github.com/dusthillresident/
+;  Tested with guile, elk, scm, and 'Ikarus Scheme' interpreters.
+;  Seems to pass 'dieharder' test suite
+;  Has been tested up to 512GB in 'practrand' with no anomalies yet but further testing is needed.
 ;
 ;                                Functions defined:
 ;  supernuts2 --------------------------------------------------------------------------
@@ -37,7 +39,7 @@
   (list 
 ; ---------- supernuts2 --------------------------
    (lambda ()
-    (set! n1 (+ n1 1))
+    (set! n1 (+ n1 1.0))
     (if (> n1 lim)
      (set! n1 nlim))
     (set! n2 (+ n2 0.73262452))
