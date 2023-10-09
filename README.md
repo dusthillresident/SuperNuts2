@@ -7,4 +7,4 @@ The practrand tests are currently at 512GB passed with no anomalies, and 16 giga
 
 It's also been visually inspected by plotting points in 3D space and plotting randomly coloured pixels to a 640x480 image. Screenshot are included in this repo. Take a look!
 
-Thank you for checking this out. Please don't hesitate to contact me with any questions.
+Thank you for checking this out. Please don't hesitate to contact me with any questions!
