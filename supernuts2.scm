@@ -22,7 +22,7 @@
 ;  supernuts2-get-seed -----------------------------------------------------------------
 ;  ---- Obtain the current state of the supernuts2 PRNG. -------------------------------
 ;  * Takes no arguments
-;  * Returns a list containing two numbers in the range -2147483647.0 to 2147483647.0
+;  * Returns a list containing two numbers in the range 0 to 7772345.67
 
 (define supernuts2
  (let ((n1 0.0) (n2 0.0) (nlim 0.0) (lim 7772345.67)) ; n1 and n2 together constitute the current state
