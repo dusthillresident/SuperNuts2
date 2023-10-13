@@ -5,7 +5,8 @@
 ; A simple PRNG
 ; author: dusthillresident@gmail.com https://github.com/dusthillresident/
 ;  Tested with guile, elk, scm, and 'Ikarus Scheme' interpreters.
-;  Currently undergoing statistical testing with 'dieharder' and 'practrand'
+;  Seems to pass 'dieharder' test suite
+;  Has been tested up to 2TB in 'practrand' with no anomalies yet but further testing is needed.
 ;
 ;                                Functions defined:
 ;  supernuts2 --------------------------------------------------------------------------
@@ -15,8 +16,8 @@
 ;  supernuts2-seed ---------------------------------------------------------------------
 ;  ---- Set the state of the supernuts2 PRNG. ------------------------------------------
 ;  * Takes an argument 'seed' which can be either
-;    . A list with two numbers in the range -2147483647.0 to 2147483647.0
-;    . A number in the range in the range -2147483647.0 to 2147483647.0
+;    . A list with two numbers in the range 0 to 7772345.67
+;    . A number in the range in the range 0 to 7772345.67
 ;  * Returns nothing
 ;  supernuts2-get-seed -----------------------------------------------------------------
 ;  ---- Obtain the current state of the supernuts2 PRNG. -------------------------------
@@ -24,35 +25,26 @@
 ;  * Returns a list containing two numbers in the range -2147483647.0 to 2147483647.0
 
 (define supernuts2
- (let* ((nlim -2147483647.0) (lim 2147483647.0) (n1 nlim) (n2 nlim)) ; n1 and n2 together constitute the current state
-  ; this is the main core of supernuts2
-  (define (fnr s)
-   (let* ((a (* s 0.7685679659876367))
-          (b (* s 0.4115346876567834))
-          (v (* s 0.1178977654437879
+ (let ((n1 0.0) (n2 0.0) (nlim 0.0) (lim 7772345.67)) ; n1 and n2 together constitute the current state
+  (define (fnr s) ; this is the core of supernuts2
+   (let* ((a (* s 0.768567965987636759608412853505842308898385650814))
+          (b (* s 0.411534687656783463715361117436596435037355834417))
+          (v (* s 0.117897765443787942569497802054514193224765904051
                   (- a (truncate a))
                   (- b (truncate b)))))
-    (if (< v 0.0)
-     (- (- v (truncate v)))
-     (- v (truncate v)))))
-  ; this is the core of supernuts2, stage 2
-  (define (fnr2)
-   (set! n1 (+ n1 1.0))
-   (if (> n1 lim)
-    (set! n1 nlim))
-   (set! n2 (+ n2 0.73262452))
-   (if (> n2 lim)
-    (set! n2 nlim))
-   (let ((v (+ (fnr n2) (fnr n1))))
     (- v (truncate v))))
-  ; check if seed values are valid
-  (define (validn? n) (and (>= n nlim) (<= n lim)))
-  ; the externally defined procedures of supernuts2 are created here
+  (define (validn? n) (and (>= n nlim) (<= n lim))) ; check if seed values are valid
   (list 
 ; ---------- supernuts2 --------------------------
    (lambda ()
-    (let ((v (+ (truncate (* (fnr2) 65536.0)) (* (truncate (* (fnr2) 65536.0)) 65536.0))))
-     (/ v 4294967296.0)))
+    (set! n1 (+ n1 0.991743537859395982857))
+    (if (> n1 lim)
+     (set! n1 (* lim (- n2 (truncate n2)))))
+    (set! n2 (+ n2 0.73262452))
+    (if (> n2 lim)
+     (set! n2 (- n1 (truncate n1))))
+    (let ((v (+ (fnr n2) (fnr n1))))
+     (- v (truncate v))))
 ; ---------- supernuts2-seed ---------------------
    (lambda (seed)
     (if (list? seed)
