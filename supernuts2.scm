@@ -1,9 +1,11 @@
 
-;.................
-;                .
-;  SuperNuts II  .
-;                .
-;.................
+;...............................................
+;                                              .
+;  SuperNuts II                                .
+;  Developed with and tested with Guile 3.0.5  .
+;                                              .
+;...............................................
+; Author dusthillresident@gmail.com  http://dusthillresident.ddns.net https://github.com/dusthillresident
 
 ; A simple random number generator written in Scheme.
 ; It can generate a number between 0.0 and 1.0,
